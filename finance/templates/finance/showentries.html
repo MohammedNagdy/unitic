@@ -1,0 +1,57 @@
+{% extends 'dashboard/dash.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% load static %}
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+</head>
+
+
+    <script src="{% static 'js/ajax-plugins.js' %}"></script>
+
+<div class="dashboard-wrapper">
+    <div class="dashboard-ecommerce">
+        <div class="container-fluid dashboard-content ">
+
+          <div class="modal fade"  id="modal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Create entry button -->
+          <button id="general-entry" class="general-entry btn btn-primary" type="button" name="button">Create Entry</button>
+
+            <table id="entry_list" class="table entry_list table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Entry Date</th>
+                  <th scope="col">Account</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Date of Payment</th>
+                  <th scope="col">Date of Serivce</th>
+                  <th scope="col">Name of Buyer or Seller</th>
+                  <th scope="col">Paid</th>
+                  <th scope="col">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% include 'finance/entry_table.html' %}
+              </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+  // call the checkAccountName function on click
+  // of the button to make it work every time the modal loads
+  // var renewal = document.getElementById('general-entry');
+  // renewal.addEventListener('click', checkAccountName());
+
+</script>
+{% endblock %}

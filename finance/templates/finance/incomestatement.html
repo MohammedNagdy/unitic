@@ -1,0 +1,267 @@
+<th scope="col">{% extends 'dashboard/dash.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="col-lg-5 col-md-7">
+          <div class="card bg-secondary border-0 mb-0">
+
+            <div class="card-body px-lg-5 py-lg-5">
+              <div class="text-center text-muted mb-4">
+                <small>Your dates</small>
+              </div>
+              <form role="form" action="" method="POST"> {% csrf_token %}
+                <div class="form-group mb-3">
+                  <div class="input-group input-group-merge input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-date-83"></i></span>
+                    </div>
+                      {{ form | crispy}}
+                  </div>
+                  <button type="submit" class="btn btn-success">Show</button>
+
+                </div>
+
+            </div>
+          </div>
+        </div>
+
+            <style type="text/css">
+                        .form-group {
+                            margin-bottom: 20px;
+                        }
+                        #vertical-2 thead,#vertical-2 tbody{
+                            display:inline-block;
+                        }
+
+                    </style>
+                  <div class="table-responsive">
+
+                    <h3 class="heading"> This income statement from date {{ start_date }} to {{ end_date }}</h3>
+
+                  <div class="table-responsive">
+                    <!-- Projects table -->
+                    <table class="table align-items-center table-flush">
+                      <thead class="thead-light">
+                        <tr>
+                          <th scope="col">Accounts</th>
+                          <th scope="col">            </th>
+                          <th scope="col">Total amount</th>
+                          <th scope="col">Performance rate</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">
+                            <strong>Sales</strong>
+                          </th>
+                          <td>
+
+                          </td>
+                          <td>
+                            <strong>{{ sales }}</strong>
+                          </td>
+                          <td>
+                            {% if sales_performance > 0 %}
+                            <i class="fas fa-arrow-up text-success mr-3"></i> {{ sales_performance }}%
+                            {% else %}
+                            <i class="fas fa-arrow-down text-danger mr-3"></i> {{ sales_performance }}%
+                            {% endif %}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">
+                            Cost of Sales
+                          </th>
+                          <td>
+
+                          </td>
+                          <td>
+                            {{ cost_of_sales }}
+                          </td>
+                          <td>
+                            {% if cost_of_sales_performance > 0 %}
+                            <i class="fas fa-arrow-up text-warning mr-3"></i> {{ cost_of_sales_performance }}%
+                            {% else %}
+                            <i class="fas fa-arrow-down text-sucess mr-3"></i> {{ cost_of_sales_performance }}%
+                            {% endif %}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">
+                            <strong>Gross Profit</strong></th>
+                          </th>
+                          <td>
+
+                          </td>
+                          <td>
+                            <strong>{{ gross_profit }}</strong>
+                          </td>
+                          <td>
+                            {% if gross_profit_performance > 0 %}
+                            <i class="fas fa-arrow-up text-success mr-3"></i> {{ gross_profit_performance }}%
+                            {% else %}
+                            <i class="fas fa-arrow-down text-danger mr-3"></i> {{ gross_profit_performance }}%
+                            {% endif %}
+                          </td>
+                        <tr>
+                          <th scope="row">
+                            Research & Development Costs
+                          </th>
+                          <td>
+
+                          </td>
+                          <td>
+                            {{ research_and_development }}
+                          </td>
+                          <td>
+                            {% if research_and_development_performance > 0 %}
+                            <i class="fas fa-arrow-up text-success mr-3"></i> {{ research_and_development_performance }}%
+                            {% else %}
+                            <i class="fas fa-arrow-down text-danger mr-3"></i> {{ research_and_development_performance }}%
+                            {% endif %}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">
+                            Salaries General & Adminstrative Costs
+                          </th>
+                          <td>
+
+                          </td>
+                          <td>
+                            {{ sg_a }}
+                          </td>
+                          <td>
+                            {% if sg_a_performance > 0 %}
+                            <i class="fas fa-arrow-up text-danger mr-3"></i> {{ sg_a_performance }}%
+                            {% else %}
+                            <i class="fas fa-arrow-down text-sucess mr-3"></i> {{ sg_a_performance }}%
+                            {% endif %}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">
+                            <strong>Total Operation Expenses</strong>
+                          </th>
+                          <td>
+
+                          </td>
+                          <td>
+                            <strong>{{ operation_exp }}</strong>
+                          </td>
+                          <td>
+                            {% if operation_exp_performance > 0 %}
+                            <i class="fas fa-arrow-up text-danger mr-3"></i> {{ operation_exp_performance }}%
+                            {% else %}
+                            <i class="fas fa-arrow-down text-success mr-3"></i> {{ operation_exp_performance }}%
+                            {% endif %}
+                          </td>
+                        </tr><tr>
+                          <th scope="row">
+                            <strong>Total Operations Income</strong>
+                          </th>
+                          <td>
+
+                          </td>
+                          <td>
+                            <strong>{{ op_income }}</strong>
+                          </td>
+                          <td>
+                            {% if op_income_performance > 0 %}
+                            <i class="fas fa-arrow-up text-success mr-3"></i> {{ op_income_performance}}%
+                            {% else %}
+                            <i class="fas fa-arrow-down text-danger mr-3"></i> {{ op_income_performance}}%
+                            {% endif %}
+                          </td>
+                        </tr><tr>
+                          <th scope="row">
+                            Interest Expense
+                          </th>
+                          <td>
+
+                          </td>
+                          <td>
+                            {{ int_exp }}
+                          </td>
+                          <td>
+                            {% if int_exp_performance > 0 %}
+                            <i class="fas fa-arrow-up text-danger mr-3"></i> {{ int_exp_performance }}%
+                            {% else %}
+                            <i class="fas fa-arrow-down text-success mr-3"></i> {{ int_exp_performance }}%
+                            {% endif %}
+                          </td>
+                        </tr><tr>
+                          <th scope="row">
+                            Other Income/Expenses
+                          </th>
+                          <td>
+
+                          </td>
+                          <td>
+                            {{ other_income }}
+                          </td>
+                          <td>
+                            {% if other_income_performance > 0 %}
+                            <i class="fas fa-arrow-up text-success mr-3"></i> {{ other_income_performance }}%
+                            {% else %}
+                            <i class="fas fa-arrow-down text-danger mr-3"></i> {{ other_income_performance }}%
+                            {% endif %}
+                          </td>
+                        </tr><tr>
+                          <th scope="row">
+                            Income Before Taxes
+                          </th>
+                          <td>
+
+                          </td>
+                          <td>
+                            {{ income_before }}
+                          </td>
+                          <td>
+                            {% if income_before_performance > 0 %}
+                            <i class="fas fa-arrow-up text-success mr-3"></i> {{ income_before_performance }}%
+                            {% else %}
+                            <i class="fas fa-arrow-down text-danger mr-3"></i> {{ income_before_performance }}%
+                            {% endif %}
+                          </td>
+                        </tr><tr>
+                          <th scope="row">
+                            Tax Expense
+                          </th>
+                          <td>
+
+                          </td>
+                          <td>
+                            {{ tax_exp }}
+                          </td>
+                          <td>
+                            {% if tax_exp_performance > 0 %}
+                            <i class="fas fa-arrow-up text-danger mr-3"></i> {{ tax_exp_performance }}%
+                            {% else %}
+                            <i class="fas fa-arrow-down text-success mr-3"></i> {{ tax_exp_performance }}%
+                            {% endif %}
+                          </td>
+                        </tr><tr>
+                          <th scope="row">
+                            <strong>Net Income</strong>
+                          </th>
+                          <td>
+
+                          </td>
+                          <td>
+                            <strong>{{ net_income }}</strong>
+                          </td>
+                          <td>
+                            {% if net_income_performance > 0 %}
+                            <i class="fas fa-arrow-up text-success mr-3"></i> {{ net_income_performance }}%
+                            {% else %}
+                            <i class="fas fa-arrow-down text-danger mr-3"></i> {{ net_income_performance }}%
+                            {% endif %}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+
+{% endblock %}

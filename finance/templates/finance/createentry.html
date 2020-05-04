@@ -1,0 +1,44 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<form method="post" action="" class="add-entry" data-url="{% url 'general-entry' %}">
+  {% csrf_token %}
+
+                   <div class="modal-header">
+                      <h5 class="modal-title">Create new book entry</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+
+                    <div class="modal-body">
+                    <div class="form-group">
+                      {{ form | crispy }}
+                    </div>
+                    </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="submit" class="submit-btn btn btn-primary">Create</button>
+                </div>
+
+  </form>
+      <!-- </div>
+   </div>
+</div> -->
+
+<div class="dashboard-ecommerce">
+<script src="{% static 'js/createentry.js' %}"></script>
+
+<script>
+
+
+ // do ajax for the form so we can use it somewhere else
+ // jQuery('.modal-content .calendar').datepicker({ dateFormat: "yy-mm-dd" });
+ //
+ //    var form_options = {
+ //        target: '#modal'
+ //    }
+ //    $('#add-entry').ajaxForm(form_options);
+
+
+</script>

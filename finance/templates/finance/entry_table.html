@@ -1,0 +1,12 @@
+{% for entry in object_list %}
+<tr>
+  <th scope="row">{{ entry.date }}</th>
+  <td>{{ entry.secondary_account }}</td>
+  <td>{{ entry.amount }}</td>
+  <td>{{ entry.date_of_payment }}</td>
+  <td>{{ entry.date_of_service }}</td>
+  <td>{{ entry.name_of_buyer_or_seller }}</td>
+  <td>{{ entry.paid }}</td>
+  <td>{{ entry.description }}</td>
+</tr>
+{% endfor %}
