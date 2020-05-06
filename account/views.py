@@ -5,6 +5,7 @@ from django.db.models.query import EmptyQuerySet # to check if the query is empt
 from django.contrib import messages
 from django.views import View
 from .forms import RegisterForm
+from django.contrib.auth import authenticate, login # to authenticate and login once registration
 from .models import Memberships, OrderItem, Cart, UserMembership, Transaction
 from django.views.generic import ListView
 from django.urls import reverse # reverse to the previous url
@@ -50,35 +51,23 @@ class HomeView(View):
 
 
 # register view
-class RegisterView(View):
-    template = 'register.html'
-    # get register template form and show the form
-    def get(self, request):
-        form = RegisterForm()
-
-        context = {
-            'form' : form,
-        }
-
-        return render(request, self.template, context)
-
-
-    # take in the data from the user
-    def post(self, request):
-        if request.method == "POST":
-            form = RegisterForm(request.POST)
-            if form.is_valid():
-                form.save()
-
-            return redirect('login')
+def signup(request):
+    if request.user.is_authenticated:
+        return redirect('/')
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect('/')
         else:
-            form = RegisterForm()
-
-        context = {
-            'form' : form,
-        }
-
-        return render(request, self.template, context)
+            return render(request, 'register.html', {'form': form})
+    else:
+        form = RegisterForm()
+        return render(request, 'register.html', {'form': form})
 
 
 # plans view for outsiders

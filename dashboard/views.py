@@ -1,3 +1,4 @@
+from django.http import JsonResponse # to send api data
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView
@@ -101,14 +102,6 @@ class DashboardView(View):
         performance_percentage = percentages(performance_0, performance_)
 
 
-        """
-        get the data for the charts
-        """
-        print(reev)
-        print(innv)
-
-
-
         context = {
             "sales": total_rev,
             "sales_percentage": rev_percentage,
@@ -117,9 +110,38 @@ class DashboardView(View):
             "inv": total_inv,
             "inv_percentage": inv_percentage,
             "performance": performance_,
-            "performance_percentage": performance_percentage
-
+            "performance_percentage": performance_percentage,
+            "list_of_sales": reev,
+            "list_of_inv":innv,
         }
 
 
         return render(request, self.template, context)
+
+
+# get th edata for the charts as an API
+def get_data(request):
+    """
+    get the data for the charts
+    """
+    # get the dates list from date_generate function
+    dates = date_generator()
+    # get the sales for days for the chart
+    sale = []
+    for date in dates:
+        rev = GeneralEntry.objects.filter(user=request.user, secondary_account="revenue", date=date)
+        reev = sum([i.amount for i in rev]) # to use it for graphing
+        sale.append(reev)
+    # get the inventory data
+    inventory = []
+    for date in dates:
+        inv =  GeneralEntry.objects.filter(user=request.user, secondary_account="inventory", date=date)
+        innv = sum([i.amount for i in inv]) # to use it for grapging
+        inventory.append(innv)
+
+    data = {
+        "sales":sale,
+        "inventory":inventory,
+        "dates": dates
+    }
+    return JsonResponse(data)

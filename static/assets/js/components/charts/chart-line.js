@@ -1,76 +1,73 @@
-'use strict';
+// draw a line chart for sales
+// get the data through ajax get requesst
+var endPoint = "api/line-data"
+$.ajax({
+    method:"GET",
+    url: endPoint,
+    success: (data) => {
+      labels = data.dates;
+      defaultData = data.sales;
+      // draw the chart from the data
+      drawChart();
+    },
+    error: (data_error) => {
+      console.log("error");
+      console.log(data_error);
+    }
+});
+
 
 //
 // Sales chart
 //
 
-var SalesChart = (function() {
+function drawChart(){
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
 
-  // Variables
+    // The data for our dataset
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Daily Sales',
+            backgroundColor: '' ,
+            borderColor: '#FFF',
+            data: defaultData
+        }]
+    },
 
-  var $chart = $('#chart-sales-dark');
-
-
-  // Methods
-
-  function init($chart) {
-
-    var salesChart = new Chart($chart, {
-      type: 'line',
-      options: {
-        scales: {
-          yAxes: [{
-            gridLines: {
-              lineWidth: 1,
-              color: Charts.colors.gray[900],
-              zeroLineColor: Charts.colors.gray[900]
-            },
-            ticks: {
-              callback: function(value) {
-                if (!(value % 10)) {
-                  return '$' + value + 'k';
-                }
-              }
-            }
-          }]
-        },
-        tooltips: {
-          callbacks: {
-            label: function(item, data) {
-              var label = data.datasets[item.datasetIndex].label || '';
-              var yLabel = item.yLabel;
-              var content = '';
-
-              if (data.datasets.length > 1) {
-                content += '<span class="popover-body-label mr-auto">' + label + '</span>';
-              }
-
-              content += '<span class="popover-body-value">$' + yLabel + 'k</span>';
-              return content;
-            }
+    // Configuration options go here
+    options: {
+  legend: {
+      labels: {
+          fontColor: "white",
+          fontSize: 12
+      }
+  },
+  scales: {
+      yAxes: [{
+          ticks: {
+              fontColor: "white",
+              fontSize: 12,
+              stepSize: 50,
+              beginAtZero: true,
+              // Include a dollar sign in the ticks
+              callback: function(value, index, values) {
+                  return '$' + value;
           }
         }
-      },
-      data: {
-        labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        datasets: [{
-          label: 'Performance',
-          data: [0, 20, 10, 30, 15, 40, 20, 60, 60]
-        }]
-      }
-    });
-
-    // Save to jQuery object
-
-    $chart.data('chart', salesChart);
-
-  };
-
-
-  // Events
-
-  if ($chart.length) {
-    init($chart);
+      }],
+      xAxes: [{
+          ticks: {
+              fontColor: "white",
+              fontSize: 12,
+              stepSize: 1,
+              beginAtZero: true
+          }
+      }]
+    }
   }
-
-})();
+})
+};

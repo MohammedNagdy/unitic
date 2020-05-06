@@ -1,5 +1,17 @@
 from .loan_calculation import LoanCalculation # a custom class to calucate the interest expense of loans
 from .models import GeneralEntry # the model we fetch the from
+import datetime
+
+# use this function to calculate the total for every daya for charts
+def date_generator():
+  from_date = datetime.date.today()
+  lst = []
+  counter = 0
+  while counter < 9:
+    from_date = from_date - datetime.timedelta(1)
+    lst.append(from_date)
+    counter += 1
+  return lst
 
 # calculating performance indicator
 def performance(value, lst):

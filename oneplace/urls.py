@@ -26,7 +26,7 @@ from dashboard.decorators import unanthenticated_user, not_auth
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', not_auth(views.HomeView.as_view()), name="home"),
-    path('register/', not_auth(views.RegisterView.as_view()), name="register"),
+    path('register/', not_auth(views.signup), name="register"),
     path('login/', not_auth(auth_views.LoginView.as_view(template_name="login.html")), name="login"),
     # check plans view
     path('check/', not_auth(views.check_plans), name="check"),
